@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/Nios-V/ecommerce/api/internal/products"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )
@@ -21,6 +22,11 @@ func (app *application) mount() http.Handler {
 
 	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("OK"))
+	})
+	productService := products.NewService()
+	productsHandler := products.NewHandler(productService)
+	r.Route("/products", func(r chi.Router) {
+		r.Get("/", productsHandler.GetAllProducts)
 	})
 
 	return r
