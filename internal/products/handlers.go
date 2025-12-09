@@ -3,7 +3,7 @@ package products
 import (
 	"net/http"
 
-	"github.com/Nios-V/ecommerce/api/internal/products/json"
+	"github.com/Nios-V/ecommerce/api/internal/json"
 )
 
 type handler struct {
