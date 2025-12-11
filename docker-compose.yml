@@ -18,5 +18,24 @@ services:
       interval: 10s
       retries: 5
 
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ecommerce_api
+    environment:
+      PORT: ${PORT} 
+      DB_HOST: postgres
+      DB_PORT: 5432 
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+    ports:
+      - "${PORT}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: always
+
 volumes:
   postgres_data:
