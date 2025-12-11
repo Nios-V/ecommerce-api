@@ -3,16 +3,15 @@ package main
 import (
 	"log/slog"
 	"os"
+
+	"github.com/Nios-V/ecommerce/api/internal/config"
 )
 
 func main() {
-	cfg := config{
-		address: ":8080",
-		db:      dbConfig{},
-	}
+	config.Load()
 
 	api := application{
-		config: cfg,
+		config: config.AppConfig,
 	}
 
 	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
