@@ -5,8 +5,11 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/Nios-V/ecommerce/api/internal/cart"
 	"github.com/Nios-V/ecommerce/api/internal/config"
 	"github.com/Nios-V/ecommerce/api/internal/database"
+	"github.com/Nios-V/ecommerce/api/internal/identity"
+	"github.com/Nios-V/ecommerce/api/internal/orders"
 	"github.com/Nios-V/ecommerce/api/internal/products"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -15,7 +18,21 @@ import (
 func (app *application) mount() http.Handler {
 
 	database.Connect()
-	database.Migrate(&products.Product{})
+	database.Migrate(
+		&products.Category{},
+		&products.Product{},
+
+		&identity.User{},
+		&identity.Address{},
+		&identity.Role{},
+
+		&cart.Cart{},
+		&cart.CartItem{},
+
+		&orders.Order{},
+		&orders.OrderItem{},
+		&orders.Payment{},
+	)
 
 	r := chi.NewRouter()
 
